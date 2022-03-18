@@ -1,5 +1,5 @@
 gp_data_connection <- function() {
-print("GP DATA CONNECTION")
+cat("GP DATA CONNECTION SUCCESSFUL!\n")
 require("RPostgreSQL")
   
 drv = dbDriver("PostgreSQL");
