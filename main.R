@@ -1,16 +1,11 @@
 library(GetoptLong)
 library(tidyverse)
 library(huxtable)
-source("gp_data_connection.R")
-source("get_user_input.R")
-source("check_practice.R")
-source("get_data.R")
-source("check_med_avail.R")
-source("check_qof_avail.R")
-source("check_practice_viable.R")
-source("get_patient_num.R")
-source("create_menu_dataframe.R")
-source("user_select_option.R")
+source("user_input_functions.R")
+source("user_display_functions.R")
+source("business_logic_functions.R")
+source("database_query_functions.R")
+
 
 db <- gp_data_connection()
 
@@ -44,16 +39,13 @@ main <- function()  {
       cat("ERROR: You have not entered a valid choice. Please try again. 'Y' or 'N")
     }
   practice_viable <- check_practice_viable(practice_id, db)
-  if (practice_viable == FALSE){
-    cat("I'm afraid we have insufficient data about this practice to proceed. Please enter another practice")
-    return (main())
-    }
   } # user confirm loop
   patient_number <- get_patient_num(practice_id, db, practice_name)
   cat("The number of patients at this practice is detailed below:\n \n")
   print(patient_number)
   user_select <- user_select_option()
-  
+  user_select_output <- get_user_select_output(db, practice_id, practice_name, user_select)
+
 } #main
 
 main()
