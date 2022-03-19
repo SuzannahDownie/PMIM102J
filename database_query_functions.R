@@ -75,14 +75,34 @@ get_av_spend <- function(id, db) {
 }
 
 
-### FUNCTION TO GET FIRST PART OF POSTCODE (OUTWARD CODE)
-get_outward_code <- function(db, id){
+### FUNCTION TO GET FIRST PART OF POSTCODE (OUTCODE)
+get_outcode <- function(db, id){
   query <- qq("SELECT LEFT(address.postcode, strpos(address.postcode, ' ') - 1) as outcode
-  FROM address 
-  WHERE(address.practiceid) = 'W92021'")
-  test <- get_data(db, query)
-  test
-  # return(get_data(db, query))
+  FROM address
+  WHERE(address.practiceid) = '@{id}'")
+  result <- get_data(db, query)
+  return(result)
 }
 
-@{id}
+
+get_av_spend_area <- function(outcode, db) {
+  query <- qq("select gp_data_up_to_2015.period, address.practiceid,
+                            address.street, address.postcode,
+                            sum(gp_data_up_to_2015.items) as total_items,
+                            sum(gp_data_up_to_2015.nic) as total_cost
+                            from gp_data_up_to_2015
+                            inner join address
+                            on gp_data_up_to_2015.practiceid = address.practiceid
+                            where postcode like '@{outcode}%'
+                            group by gp_data_up_to_2015.period, address.practiceid,
+                            address.street, address.postcode")
+  av_spend_area <- get_data(db, query)
+  print(av_spend_area)
+  return(av_spend_area)
+}
+
+
+# get_av_spend_area(db, query)
+
+
+# 

@@ -13,9 +13,11 @@ get_user_select_output <- function(db, id, name, selection) {
     result <- cat("The average monthly spend on medication at", name, "is:\n \n £", user_select_output, "\n")
     user_go_again()
   } else if (selection == 2) {
-    user_select_output <- get_av_spend_area(db, id)
+      outcode <- get_outcode(db, id)
+      outcode <- unlist(outcode)
+      user_select_output <- get_av_spend_area(outcode, db)
   }
-  return(result)
+
   }
 
 
