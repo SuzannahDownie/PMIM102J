@@ -121,6 +121,7 @@ get_diabetes_rate_practice <- function(db, id){
               FROM qof_achievement 
               WHERE indicator = 'DM001' AND orgcode = '@{id}'")
   result <- get_data(db, query)
+  result <- result$percentage_with
   return(result)
 }
 
@@ -131,7 +132,6 @@ get_diabetes_rate_wales <- function(db, id){
                 FROM qof_achievement k
                 WHERE indicator = 'DM001' AND k.orgcode NOT IN ('@{id}')")
   result <- get_data(db, query)
+  result <- round(mean(result$percentage_with), 2)
   return(result)
 }
-
-get_diabetes_rate_wales(db, id)

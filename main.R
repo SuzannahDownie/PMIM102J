@@ -2,6 +2,7 @@ library(GetoptLong)
 library(tidyverse)
 library(huxtable)
 library(ggpubr)
+library(reshape)
 source("user_input_functions.R")
 source("user_display_functions.R")
 source("business_logic_functions.R")
@@ -46,8 +47,15 @@ main <- function()  {
   cat("The number of patients at this practice is detailed below:\n \n")
   print(patient_number)
   user_select <- user_select_option()
-  user_select_output <- get_user_select_output(db, practice_id, practice_name, practice_postcode, user_select)
-
+  user_select_output <- get_user_select_output(db, practice_id, practice_name, 
+                                               practice_postcode, user_select)
+  go_again <- user_go_again()
+  if (!is.null(go_again)){
+    print(go_again)
+    user_select_next_output <- get_user_select_output(db, 
+                        practice_id, practice_name, practice_postcode, go_again)
+  }
+    
 } #main
 
 main()

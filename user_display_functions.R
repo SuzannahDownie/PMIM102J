@@ -23,7 +23,7 @@ create_menu_dataframe <- function(){
 }
 
 
-visualise_opt_2 <- function(input){
+visualise_opt_2 <- function(input){3
   plot_spend <- ggdotchart(input, x = "street.x", y = "per_patient_spend",
                      color = "street.x", sorting = "ascending",                        
                      add = "segments", dot.size = 6, 
@@ -31,5 +31,18 @@ visualise_opt_2 <- function(input){
                      ylab = "Spend", legend_title = "Practice", 
                      ggtheme = theme_pubr())
   return(plot_spend)
+}
+
+
+visualise_opt_3 <- function(diabetes_df) {
+  diabetes_df <- melt(diabetes_df, measure.vars = c("diabetes_rate_practice", 
+                                                    "diabetes_rate_wales"))
+  colnames(diabetes_df) <- c("cat_name", "value")
+  plot_diabetes_data <- ggplot(diabetes_df) +
+    geom_bar(aes(x = cat_name, y = value, fill = cat_name), stat = "identity",
+             width = 0.5) + ggtitle("Rate of Diabetes at Practice v All Wales Average")
+              + xlab(" ") + ylab("Rate of Diabetes as %") + labs(fill = " ") +
+              ggtheme = theme_pubr()
+    print(plot_diabetes_data)
 }
 
