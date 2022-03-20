@@ -13,8 +13,8 @@ get_user_select_output <- function(db, id, name, postcode, selection) {
     result <- cat("The average monthly spend on medication at", name, "is:\n \n £", user_select_output, "\n")
   } else if (selection == 2) {
     outcode <- get_outcode(db, postcode)
-    user_select_output <- get_av_spend_area(outcode, db, postcode)
-    plot_spend <- visualise_opt_2(user_select_output)
+    av_spend_df <- get_av_spend_area(outcode, db, postcode)
+    plot_spend <- visualise_opt_2(av_spend_df)
   } else if (selection == 3){
     diabetes_rate_practice <- get_diabetes_rate_practice(db, id)
     diabetes_rate_wales <- get_diabetes_rate_wales(db, id)

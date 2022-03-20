@@ -23,16 +23,19 @@ create_menu_dataframe <- function(){
 }
 
 
-visualise_opt_2 <- function(input){3
-  plot_spend <- ggdotchart(input, x = "street.x", y = "per_patient_spend",
+visualise_opt_2 <- function(df){
+  plot_spend <- ggdotchart(data = df, x = "street.x", y = "per_patient_spend",
                      color = "street.x", sorting = "ascending",                        
                      add = "segments", dot.size = 6, 
                      title = "Average Spend per Patient", xlab = "Practice",
                      ylab = "Spend", legend_title = "Practice", 
                      ggtheme = theme_pubr())
-  return(plot_spend)
+  print(plot_spend)
+  # return(plot_spend)
 }
+??ggdotchart
 
+visualise_opt_2()
 
 visualise_opt_3 <- function(diabetes_df) {
   diabetes_df <- melt(diabetes_df, measure.vars = c("diabetes_rate_practice", 

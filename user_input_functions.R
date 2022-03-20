@@ -8,7 +8,7 @@ get_user_input <- function() {
 
 user_select_option <- function(user_choice){
   while (!(user_choice %in% c("1", "2", "3", "4", "5"))) {
-    if (!(user_choice %in% c("1", "2", "3", "4", "5")))
+    # if (!(user_choice %in% c("1", "2", "3", "4", "5")))
     cat("You have not entered a correct option, try again. \n \n")  
     cat('\nPlease select one of the following options by typing the number of the option you require followed by enter:\n \n')
     display_option <- create_menu_dataframe()
@@ -25,13 +25,10 @@ user_go_again <- function() {
   go_again_input <- readline("Input: ")
   go_again_input <- tolower(go_again_input)
   if (go_again_input  == "y" || go_again_input == "'y'") {
-    cat('\nPlease select one of the following options by typing the number of the option you require followed by enter:\n \n')
-    display_option <- create_menu_dataframe()
-    user_choice <- readline("Input: ")
-    user_choice <- user_select_option(user_choice)
-    return(user_choice)
+    next
   } else if (go_again_input == "exit" || go_again_input == "'exit'"){
     exit()
+    return(TRUE)
   } else {
     cat("You have not entered a correct option, try again. \n \n")
     user_go_again()
