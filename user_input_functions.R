@@ -25,7 +25,6 @@ user_go_again <- function() {
   go_again_input <- readline("Input: ")
   go_again_input <- tolower(go_again_input)
   if (go_again_input  == "y" || go_again_input == "'y'") {
-    next
   } else if (go_again_input == "exit" || go_again_input == "'exit'"){
     exit()
     return(TRUE)

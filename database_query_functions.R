@@ -20,8 +20,8 @@ get_data <- function(db, query){
 
 ### FUNCTION TO CHECK GP PRACTICE ID RETURNS VALUE
 check_practice <- function(input, db){
-  query <- qq(paste0("select practiceid, street, postcode from ",
-                              "address a where practiceid = '@{input}'"))
+  query <- qq(paste0("SELECT practiceid, street, postcode FROM ",
+                              "address a WHERE practiceid = '@{input}'"))
   return(get_data(db, query))
 }
 
@@ -67,7 +67,8 @@ get_patient_num <- function(id, db, name){
 
 ### GET THE AVERAGE SPEND PER MONTH FOR THE CHOSEN GP PRACTICE
 get_av_spend <- function(id, db) {
-  query <- qq("SELECT a.practiceid, a.street, ROUND(SUM(g.actcost::decimal), 2) AS total_cost,
+  query <- qq("SELECT a.practiceid, a.street, ROUND(SUM(g.actcost::decimal), 2) 
+  AS total_cost,
   COUNT(DISTINCT g.period) AS total_periods
   FROM gp_data_up_to_2015 g
   INNER JOIN address a 

@@ -26,16 +26,14 @@ create_menu_dataframe <- function(){
 visualise_opt_2 <- function(df){
   plot_spend <- ggdotchart(data = df, x = "street.x", y = "per_patient_spend",
                      color = "street.x", sorting = "ascending",                        
-                     add = "segments", dot.size = 6, 
+                     add = "segments", dot.size = 5, 
                      title = "Average Spend per Patient", xlab = "Practice",
                      ylab = "Spend", legend_title = "Practice", 
-                     ggtheme = theme_pubr())
-  print(plot_spend)
-  # return(plot_spend)
+                     ggtheme = theme_classic())
+  plot_spend_final <- ggpar(plot_spend, tickslab = FALSE)
+  print(plot_spend_final)
 }
-??ggdotchart
 
-visualise_opt_2()
 
 visualise_opt_3 <- function(diabetes_df) {
   diabetes_df <- melt(diabetes_df, measure.vars = c("diabetes_rate_practice", 
