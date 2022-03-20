@@ -46,18 +46,26 @@ main <- function()  {
   patient_number <- get_patient_num(practice_id, db, practice_name)
   cat("The number of patients at this practice is detailed below:\n \n")
   print(patient_number)
-  cat('\nPlease select one of the following options by typing the number of the option you require followed by enter:\n \n')
-  display_option <- create_menu_dataframe()
-  user_choice <- readline("Input: ")
-  user_select <- user_select_option(user_choice)
-  user_select_output <- get_user_select_output(db, practice_id, practice_name, 
-                                               practice_postcode, user_select)
-  go_again <- user_go_again()
-  if (!is.null(go_again)){
-    print(go_again)
-    user_select_next_output <- get_user_select_output(db, 
-                        practice_id, practice_name, practice_postcode, go_again)
+  exit_flag = FALSE
+  while (exit_flag == FALSE) {
+    cat('\nPlease select one of the following options by typing the number of the option you require followed by enter:\n \n')
+    display_option <- create_menu_dataframe()
+    user_choice <- readline("Input: ")
+    user_select <- user_select_option(user_choice)
+    user_select_output <- get_user_select_output(db, practice_id, practice_name, 
+                                                 practice_postcode, user_select)
+    go_again <- user_go_again()
+    if (go_again == TRUE) {
+      exit_flag = TRUE
+    }
   }
+  
+  
+  
+  
+  
+ 
+  
     
 } #main
 

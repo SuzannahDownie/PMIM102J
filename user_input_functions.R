@@ -25,7 +25,10 @@ user_go_again <- function() {
   go_again_input <- readline("Input: ")
   go_again_input <- tolower(go_again_input)
   if (go_again_input  == "y" || go_again_input == "'y'") {
-    user_choice <- user_select_option()
+    cat('\nPlease select one of the following options by typing the number of the option you require followed by enter:\n \n')
+    display_option <- create_menu_dataframe()
+    user_choice <- readline("Input: ")
+    user_choice <- user_select_option(user_choice)
     return(user_choice)
   } else if (go_again_input == "exit" || go_again_input == "'exit'"){
     exit()
