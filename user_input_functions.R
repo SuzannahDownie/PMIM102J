@@ -6,18 +6,17 @@ get_user_input <- function() {
   return(clean_input_surgery)
 }
 
-user_select_option <- function(){
-  cat('\nPlease select one of the following options by typing the number of the option you require followed by enter:\n \n')
-  display_option <- create_menu_dataframe()
-  user_choice <- readline("Input: ")
-  if (!(user_choice %in% c("1", "2", "3", "4", "5"))) {
+user_select_option <- function(user_choice){
+  while (!(user_choice %in% c("1", "2", "3", "4", "5"))) {
+    if (!(user_choice %in% c("1", "2", "3", "4", "5")))
     cat("You have not entered a correct option, try again. \n \n")  
-    user_select_option()
-  } else {
-    user_choice <- strtoi(user_choice)
-    print(typeof(user_choice))
+    cat('\nPlease select one of the following options by typing the number of the option you require followed by enter:\n \n')
+    display_option <- create_menu_dataframe()
+    user_choice <- readline("Input: ")
   }
+    user_choice <- strtoi(user_choice)
     return(user_choice)
+  
 }
 
 
