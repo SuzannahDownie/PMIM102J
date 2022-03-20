@@ -7,15 +7,21 @@ exit <- function() {
 ### OUTPUT THE RESULT OF THE USER'S MENU SELECTION -
 ### THIS WILL SHOW THE DESIRED OUTPUT OF PART 1 OF THE ASSIGNMENT AND EITHER 
 ### ASK USER IF THEY WANT TO GO AGAIN OR QUIT
-get_user_select_output <- function(db, id, name, selection) {
+get_user_select_output <- function(db, id, name, postcode, selection) {
   if (selection == 1) {
+    print("User Select 1")
     user_select_output <- get_av_spend(id, db)
     result <- cat("The average monthly spend on medication at", name, "is:\n \n £", user_select_output, "\n")
     user_go_again()
   } else if (selection == 2) {
-      outcode <- get_outcode(db, id)
-      outcode <- unlist(outcode)
-      user_select_output <- get_av_spend_area(outcode, db)
+    print("User Select 2")
+    outcode <- get_outcode(db, postcode)
+    user_select_output <- get_av_spend_area(outcode, db, postcode)
+    plot_spend <- visualise_opt_2(user_select_output)
+    print(plot_spend)
+    user_go_again()
+  } else if (selection == 3){
+    diabetes_rate <- get_diabetes_rate(db, id)
   }
 
   }

@@ -12,11 +12,11 @@ user_select_option <- function(){
   user_choice <- readline("Input: ")
   user_choice <- strtoi(user_choice)
   if (user_choice == 1 || user_choice == 2 || user_choice == 3 || user_choice == 4 || user_choice == 5) {
+    return(user_choice)
   } else {
     cat("You have not entered a correct option, try again. \n \n")  
     user_select_option()
   }
-  return(user_choice)
 }
 
 user_go_again <- function() {

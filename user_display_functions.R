@@ -21,3 +21,15 @@ create_menu_dataframe <- function(){
   final_hux <- print_screen(menu_df_hux, colnames = FALSE)
   return(final_hux)
 }
+
+
+visualise_opt_2 <- function(input){
+  plot_spend <- ggdotchart(input, x = "street.x", y = "per_patient_spend",
+                     color = "street.x", sorting = "ascending",                        
+                     add = "segments", dot.size = 6, 
+                     title = "Average Spend per Patient", xlab = "Practice",
+                     ylab = "Spend", legend_title = "Practice", 
+                     ggtheme = theme_pubr())
+  return(plot_spend)
+}
+

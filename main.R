@@ -1,6 +1,7 @@
 library(GetoptLong)
 library(tidyverse)
 library(huxtable)
+library(ggpubr)
 source("user_input_functions.R")
 source("user_display_functions.R")
 source("business_logic_functions.R")
@@ -32,6 +33,7 @@ main <- function()  {
     } else if (user_confirm == "Y" || user_confirm == "'Y'"){
       practice_id <- practice$practiceid
       practice_name <- practice$street
+      practice_postcode <- practice$postcode
       cat("Thank you. We are just checking if we have medicine and QOF information for this practice...\n \n")
       user_confirm_flag <- TRUE
     }
@@ -44,7 +46,7 @@ main <- function()  {
   cat("The number of patients at this practice is detailed below:\n \n")
   print(patient_number)
   user_select <- user_select_option()
-  user_select_output <- get_user_select_output(db, practice_id, practice_name, user_select)
+  user_select_output <- get_user_select_output(db, practice_id, practice_name, practice_postcode, user_select)
 
 } #main
 
