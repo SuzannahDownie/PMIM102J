@@ -29,8 +29,8 @@ user_go_again <- function() {
     return(result)
   } else if (go_again_input == "exit" || go_again_input == "'exit'"){
     result <- 2
-    return(result)
     exit()
+    return(result)
   } else {
     cat("You have not entered a correct option, try again. \n \n")
     user_go_again()
