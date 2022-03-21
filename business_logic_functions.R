@@ -20,8 +20,14 @@ get_user_select_output <- function(db, id, name, postcode, selection) {
     diabetes_rate_practice <- get_diabetes_rate_practice(db, id)
     diabetes_rate_wales <- get_diabetes_rate_wales(db, id)
     diabetes_df <- data.frame(diabetes_rate_practice, diabetes_rate_wales)
+    diabetes_df <- melt(diabetes_df, measure.vars = c("diabetes_rate_practice", 
+                                                      "diabetes_rate_wales"))
+    colnames(diabetes_df) <- c("cat_name", "diabetes_rate")
     plot_diabetes_rate <- visualise_opt_3(diabetes_df)
-  } 
+  } else if (selection == 4){
+    diabetes_insulin_rate <- get_diabetes_and_insulin(db)
+    plot_diabetes_insulin <- visualise_opt_4(diabetes_insulin_rate)
+  }
 
   }
 
