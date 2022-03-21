@@ -47,21 +47,28 @@ visualise_opt_3 <- function(diabetes_df) {
   print(diabetes_plot)
 }
 
-visualise_opt_4 <- function(diab_ins_df){
-  fig <- plot_ly(data = diabetes_insulin_rate, 
+suppress_plotly_error <- function(p) {
+  suppressMessages(plotly_build(p))
+}
+
+visualise_opt_4 <- function(diabetes_insulin_rate){
+  fig <- suppress_plotly_error(
+  plot_ly(data = diabetes_insulin_rate, 
                  x = diabetes_insulin_rate$total_insulin, 
-                 y = diabetes_insulin_rate$percentage_with_diabetes,
+                 y = diabetes_insulin_rate$total_with_diabetes,
                  marker = list(size = 8,
                                color = 'steelblue1',
                                line = list(color = 'cornflowerblue',
                                            width = 1)),
                  text = paste("Total Insulin: ", 
                               diabetes_insulin_rate$total_insulin, 
-                              '<br>Patients with Diabetes %: ',
-                              diabetes_insulin_rate$percentage_with_diabetes,
+                              '<br>Patients with Diabetes: ',
+                              diabetes_insulin_rate$total_with_diabetes,
                               '<br>Practice Name: ', diabetes_insulin_rate$street,
                               '<br>Practice ID: ', diabetes_insulin_rate$orgcode)) %>%
-    layout(title = 'Rate of Diabetes Prevalence and Insulin Prescription')
+    layout(title = 'Rate of Diabetes Prevalence and Insulin Prescription for 2015')
+  )
   print(fig)
 }
+
 

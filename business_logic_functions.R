@@ -27,6 +27,15 @@ get_user_select_output <- function(db, id, name, postcode, selection) {
   } else if (selection == 4){
     diabetes_insulin_rate <- get_diabetes_and_insulin(db)
     plot_diabetes_insulin <- visualise_opt_4(diabetes_insulin_rate)
+    t_test <- t.test(diabetes_insulin_rate$total_insulin, 
+           diabetes_insulin_rate$total_with_diabetes)
+    t_test <- t.test(diabetes_insulin_rate$total_insulin, diabetes_insulin_rate$total_with_diabetes)
+    t_test_dec <- format(t_test$p.value, scientific = FALSE)
+    cat("The t test p-value is:\n \n", 
+                  t_test_dec, "\n \n")
+    if (t_test_dec < 0.5){
+      cat("This is statistically significant\n \n")
+    }
   }
 
   }
