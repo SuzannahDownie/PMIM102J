@@ -54,10 +54,13 @@ main <- function()  {
     user_select <- user_select_option(user_choice)
     user_select_output <- get_user_select_output(db, practice_id, practice_name, 
                                                  practice_postcode, user_select)
-    go_again <- user_go_again()
-    if (go_again == TRUE) {
-      exit_flag = TRUE
+    exit_or_stay <- user_go_again()
+    if (exit_or_stay == 1) {
+      exit_flag <- FALSE
     }
+    else if (exit_or_stay == 2) {
+      exit_flag <- TRUE
+    } 
   }
   
   

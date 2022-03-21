@@ -25,9 +25,12 @@ user_go_again <- function() {
   go_again_input <- readline("Input: ")
   go_again_input <- tolower(go_again_input)
   if (go_again_input  == "y" || go_again_input == "'y'") {
+    result <- 1
+    return(result)
   } else if (go_again_input == "exit" || go_again_input == "'exit'"){
+    result <- 2
+    return(result)
     exit()
-    return(TRUE)
   } else {
     cat("You have not entered a correct option, try again. \n \n")
     user_go_again()

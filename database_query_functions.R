@@ -73,9 +73,10 @@ get_av_spend <- function(id, db) {
   FROM gp_data_up_to_2015 g
   INNER JOIN address a 
   ON  g.practiceid = a.practiceid
-  WHERE a.practiceid = 'W92021' and g.period >= 201401 and g.period < 201501
+  WHERE a.practiceid = '@{id}' and g.period >= 201401 and g.period < 201501
   GROUP BY a.practiceid, a.street")
   av_spend_total <- get_data(db, query)
+  print(av_spend_total)
   av_spend_monthly_total <- av_spend_total$total_cost/av_spend_total$total_periods 
   return(av_spend_monthly_total)
 }
