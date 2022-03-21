@@ -72,3 +72,22 @@ visualise_opt_4 <- function(diabetes_insulin_rate){
 }
 
 
+visualise_opt_5 <- function(diabetes_metformin_rate){
+  fig <- suppress_plotly_error(
+    plot_ly(data = diabetes_metformin_rate, 
+            x = diabetes_metformin_rate$total_metformin, 
+            y = diabetes_metformin_rate$total_with_diabetes,
+            marker = list(size = 8,
+                          color = 'steelblue1',
+                          line = list(color = 'cornflowerblue',
+                                      width = 1)),
+            text = paste("Total Insulin: ", 
+                         diabetes_metformin_rate$total_metformin, 
+                         '<br>Patients with Diabetes: ',
+                         diabetes_metformin_rate$total_with_diabetes,
+                         '<br>Practice Name: ', diabetes_metformin_rate$street,
+                         '<br>Practice ID: ', diabetes_metformin_rate$orgcode)) %>%
+      layout(title = 'Rate of Diabetes Prevalence and Metformin Prescription for 2015')
+  )
+  print(fig)
+}

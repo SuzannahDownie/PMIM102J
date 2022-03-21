@@ -138,7 +138,7 @@ get_diabetes_rate_wales <- function(db, id){
   return(result)
 }
 
-### GET DIABETES PERCENTAGE AND INSULIN ITEMS
+### GET DIABETES TOTAL AND INSULIN TOTAL PER PRACTICE
 get_diabetes_and_insulin <- function(db){
   query <- qq("SELECT a.street, k.orgcode, MAX(k.numerator)
                     AS total_with_diabetes, SUM(g.items) as total_insulin
@@ -155,3 +155,19 @@ get_diabetes_and_insulin <- function(db){
   return(result)
 }
 
+### GET DIABETES TOTAL AND METFORMIN TOTAL PER PRACTICE
+get_diabetes_and_metformin <- function(db) {
+  query <- qq("SELECT a.street, k.orgcode, MAX(k.numerator)
+                  AS total_with_diabetes, SUM(g.items) as total_metformin
+                  FROM qof_achievement k
+                  INNER JOIN address a
+                  ON k.orgcode = a.practiceid
+                  INNER JOIN gp_data_up_to_2015 g
+                  ON a.practiceid = g.practiceid
+                  WHERE k.indicator = 'DM001' AND g.bnfcode LIKE '0601022%' 
+                  AND g.period >= 201401 AND g.period < 201501
+                  GROUP BY k.orgcode, a.street
+                  ORDER BY total_metformin")
+  result <- get_data(db, query)
+  return(result) 
+}

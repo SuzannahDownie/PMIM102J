@@ -5,8 +5,7 @@ exit <- function() {
   }    
 
 ### OUTPUT THE RESULT OF THE USER'S MENU SELECTION -
-### THIS WILL SHOW THE DESIRED OUTPUT OF PART 1 OF THE ASSIGNMENT AND EITHER 
-### ASK USER IF THEY WANT TO GO AGAIN OR QUIT
+### THIS WILL SHOW THE DESIRED OUTPUT OF PART 1 OF THE ASSIGNMENT 
 get_user_select_output <- function(db, id, name, postcode, selection) {
   if (selection == 1) {
     user_select_output <- get_av_spend(id, db)
@@ -30,17 +29,27 @@ get_user_select_output <- function(db, id, name, postcode, selection) {
     t_test <- t.test(diabetes_insulin_rate$total_insulin, 
            diabetes_insulin_rate$total_with_diabetes)
     t_test <- t.test(diabetes_insulin_rate$total_insulin, diabetes_insulin_rate$total_with_diabetes)
-    t_test_dec <- format(t_test$p.value, scientific = FALSE)
+    t_test_ins <- format(t_test$p.value, scientific = FALSE)
     cat("The t test p-value is:\n \n", 
-                  t_test_dec, "\n \n")
-    if (t_test_dec < 0.5){
+                  t_test_ins, "\n \n")
+    if (t_test_ins < 0.5){
+      cat("This is statistically significant\n \n")
+    }
+  } else if (selection == 5) {
+    diabetes_metformin_rate <- get_diabetes_and_metformin(db)
+    plot_diabetes_metformin <- visualise_opt_5(diabetes_metformin_rate)
+    t_test <- t.test(diabetes_metformin_rate$total_metformin, 
+                     diabetes_metformin_rate$total_with_diabetes)
+    t_test <- t.test(diabetes_metformin_rate$total_metformin, 
+                     diabetes_metformin_rate$total_with_diabetes)
+    t_test_met <- format(t_test$p.value, scientific = FALSE)
+    cat("The t test p-value is:\n \n", 
+        t_test_met, "\n \n")
+    if (t_test_met < 0.5){
       cat("This is statistically significant\n \n")
     }
   }
-
-  }
-
-
+}
 ### THIS FUNCTION CALLS TWO DATABASE QUERY FUNCTIONS:
 ###         - CHECK IF MEDICINE DATA AVAILABLE FOR CHOSEN GP PRACTICE
 ###         - CHECK IF QOF DATA AVAILABLE FOR CHOSEN GP PRACTICE
@@ -58,6 +67,7 @@ check_practice_viable <- function(input, db){
     cat("I'm afraid we have insufficient data about this practice to proceed. Please enter another practice. \n")
     return (main())
   }
-  return(practice_viable) 
-}  
+  return(practice_viable)
+} 
+
   
