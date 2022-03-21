@@ -5,7 +5,8 @@ exit <- function() {
   }    
 
 ### OUTPUT THE RESULT OF THE USER'S MENU SELECTION -
-### THIS WILL SHOW THE DESIRED OUTPUT OF PART 1 OF THE ASSIGNMENT 
+### THIS WILL SHOW THE DESIRED OUTPUT OF PART 1 OF THE ASSIGNMENT
+### COULD BE REFACTORED TO BE FAR LESS CUMBERSOME
 get_user_select_output <- function(db, id, name, postcode, selection) {
   if (selection == 1) {
     user_select_output <- get_av_spend(id, db)
@@ -28,7 +29,8 @@ get_user_select_output <- function(db, id, name, postcode, selection) {
     plot_diabetes_insulin <- visualise_opt_4(diabetes_insulin_rate)
     t_test <- t.test(diabetes_insulin_rate$total_insulin, 
            diabetes_insulin_rate$total_with_diabetes)
-    t_test <- t.test(diabetes_insulin_rate$total_insulin, diabetes_insulin_rate$total_with_diabetes)
+    t_test <- t.test(diabetes_insulin_rate$total_insulin, 
+                     diabetes_insulin_rate$total_with_diabetes)
     t_test_ins <- format(t_test$p.value, scientific = FALSE)
     cat("The t test p-value is:\n \n", 
                   t_test_ins, "\n \n")
@@ -64,7 +66,8 @@ check_practice_viable <- function(input, db){
     practice_viable <- TRUE
   } else{
     practice_viable <- FALSE
-    cat("I'm afraid we have insufficient data about this practice to proceed. Please enter another practice. \n")
+    cat("I'm afraid we have insufficient data about this practice to proceed.\n") 
+    cat ("Please enter another practice.\n")
     return (main())
   }
   return(practice_viable)

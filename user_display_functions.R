@@ -1,9 +1,11 @@
+### FUNCTION TO CREATE A USER MENU ASKING THEM WHICH OF THE PART 1 TASKS THEY 
+### WOULD LIKE TO SEE
 create_menu_dataframe <- function(){
   option_no <- c(1, 2, 3, 4, 5)
   option <- c("AVERAGE MEDICATION SPEND.\n", 
 "AVERAGE MEDICATION SPEND COMPARED TO POSTCODE AREA", "RATE OF DIABETES",
-"ALL-WALES STATISITICAL ANALYSIS OF THE RATE OF DIABETES AND THE RATE OF INSULIN PRESCRIPTION",
-"ALL-WALES STATISITICAL ANALYSIS OF THE RATE OF DIABETES AND THE RATE OF METFORMIN PRESCRIPTION")
+"ALL-WALES STATISTICAL ANALYSIS OF THE RATE OF DIABETES AND INSULIN PRESCRIPTION",
+"ALL-WALES STATISTICAL ANALYSIS OF THE RATE OF DIABETES AND METFORMIN PRESCRIPTION")
   
   menu_df <- data.frame(option_no, option)
   
@@ -21,7 +23,7 @@ create_menu_dataframe <- function(){
   return(final_hux)
 }
 
-
+### CREATE THE PLOT FOR OPTION 2 - AVERAGE MEDICATION SPEND
 visualise_opt_2 <- function(df){
   plot_spend <- ggdotchart(data = df, x = "street.x", y = "per_patient_spend",
                      color = "street.x", sorting = "ascending",                        
@@ -34,6 +36,7 @@ visualise_opt_2 <- function(df){
 }
 
 
+### CREATE THE PLOT FOR OPTION 3 - RATE OF DIABETES
 visualise_opt_3 <- function(diabetes_df) {
   diabetes_plot <- ggplot(diabetes_df) + 
     geom_bar(aes(x = cat_name, y = diabetes_rate, fill = cat_name), 
@@ -47,10 +50,14 @@ visualise_opt_3 <- function(diabetes_df) {
   print(diabetes_plot)
 }
 
+### FUNCTION TO SUPRESS THE INTERACTIVE PLOTLY UNNECCESARY WARNING MESSAGE THAT
+### DISRUPTS USER EXPERIENCE
 suppress_plotly_error <- function(p) {
   suppressMessages(plotly_build(p))
 }
 
+
+### CREATE THE PLOT FOR OPTION 4 - RATE OF DIABETES V RATE OF INSULIN PRESCRIPTION
 visualise_opt_4 <- function(diabetes_insulin_rate){
   fig <- suppress_plotly_error(
   plot_ly(data = diabetes_insulin_rate, 
@@ -72,6 +79,7 @@ visualise_opt_4 <- function(diabetes_insulin_rate){
 }
 
 
+### CREATE THE PLOT FOR OPTION 5 - RRATE OF DIABETES V RATE OF METFORMIN PRESCRIPTION
 visualise_opt_5 <- function(diabetes_metformin_rate){
   fig <- suppress_plotly_error(
     plot_ly(data = diabetes_metformin_rate, 

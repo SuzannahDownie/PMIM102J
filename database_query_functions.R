@@ -11,7 +11,7 @@ gp_data_connection <- function() {
 }
 
 
-### FUNCTION TO RUN A QUERY ON THE DATABASE AND RETURN DATA
+### FUNCTION TO RUN ANY QUERY ON THE DATABASE AND RETURN DATA
 get_data <- function(db, query){
   result <- dbGetQuery(db, query)
   return(result)
@@ -26,7 +26,7 @@ check_practice <- function(input, db){
 }
 
 
-### CHECK THAT MEDCINE DATA IS AVAILABLE FOR THE CHOSEN GP PRACTICE
+### FUNCTION TO CHECK THAT MEDCINE DATA IS AVAILABLE FOR THE CHOSEN GP PRACTICE
 check_med_avail <- function(id, db){
   query <- qq(paste0("SELECT COUNT(DISTINCT g.bnfcode) 
                      FROM gp_data_up_to_2015 g 
@@ -95,7 +95,8 @@ get_outcode <- function(db, postcode){
 ### GET THE AVERAGE SPEND PER HEAD IN POSTCODE AREA
 get_av_spend_area <- function (outcode, db, postcode) {
   outcode <- get_outcode(db, postcode)
-  query_total_sum <- qq("SELECT a.practiceid, a.street, SUM(g.actcost) AS total_cost
+  query_total_sum <- qq("SELECT a.practiceid, a.street, 
+            SUM(g.actcost) AS total_cost
             FROM gp_data_up_to_2015 g
             INNER JOIN address a
             ON g.practiceid = a.practiceid

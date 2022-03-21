@@ -36,20 +36,23 @@ main <- function()  {
       practice_id <- practice$practiceid
       practice_name <- practice$street
       practice_postcode <- practice$postcode
-      cat("Thank you. We are just checking if we have medicine and QOF information for this practice...\n \n")
+      cat("Thank you.") 
+      cat("We are just checking if we have medicine and QOF information\n")
+      cat("for this practice...\n \n")
       user_confirm_flag <- TRUE
     }
     else {
       cat("ERROR: You have not entered a valid choice. Please try again. 'Y' or 'N")
     }
   practice_viable <- check_practice_viable(practice_id, db)
-  } # user confirm loop
+  } 
   patient_number <- get_patient_num(practice_id, db, practice_name)
   cat("The number of patients at this practice is detailed below:\n \n")
   print(patient_number)
   exit_flag = FALSE
   while (exit_flag == FALSE) {
-    cat('\nPlease select one of the following options by typing the number of the option you require followed by enter:\n \n')
+    cat("\nPlease select one of the following options by typing the number of\n")
+    cat("the option you require followed by enter:\n \n")
     display_option <- create_menu_dataframe()
     user_choice <- readline("Input: ")
     user_select <- user_select_option(user_choice)
@@ -63,15 +66,7 @@ main <- function()  {
       exit_flag <- TRUE
     } 
   }
-  
-  
-  
-  
-  
- 
-  
-    
-} #main
+}
 
 main()
   
