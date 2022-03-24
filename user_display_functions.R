@@ -73,7 +73,7 @@ visualise_opt_4 <- function(diabetes_insulin_rate){
                               diabetes_insulin_rate$total_with_diabetes,
                               '<br>Practice Name: ', diabetes_insulin_rate$street,
                               '<br>Practice ID: ', diabetes_insulin_rate$orgcode)) %>%
-    layout(title = 'Rate of Diabetes Prevalence and Insulin Prescription for 2015')
+    layout(title = '\nRate of Diabetes Prevalence and Insulin Prescription for 2015')
   )
   print(fig)
 }
@@ -95,7 +95,7 @@ visualise_opt_5 <- function(diabetes_metformin_rate){
                          diabetes_metformin_rate$total_with_diabetes,
                          '<br>Practice Name: ', diabetes_metformin_rate$street,
                          '<br>Practice ID: ', diabetes_metformin_rate$orgcode)) %>%
-      layout(title = 'Rate of Diabetes Prevalence and Metformin Prescription for 2015')
+      layout(title = '\nRate of Diabetes Prevalence and Metformin Prescription for 2015')
   )
   print(fig)
 }

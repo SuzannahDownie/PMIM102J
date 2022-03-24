@@ -172,3 +172,21 @@ get_diabetes_and_metformin <- function(db) {
   result <- get_data(db, query)
   return(result) 
 }
+  
+### GET TOP 50 MOST EXPENSIVE MEDICINES PRESCRIBED ACROSS WALES
+get_top_prescription <- function(db){
+  query <- qq("SELECT g.bnfcode, g.bnfname, 
+                ROUND(SUM(g.nic::decimal), 2) AS total_cost,
+                SUM(g.quantity) AS total_items,
+                COUNT(DISTINCT g.period) AS total_periods
+                FROM gp_data_up_to_2015 g
+                WHERE g.period >= 201401 AND g.period < 201501
+                GROUP BY g.bnfcode, g.bnfname
+                ORDER BY total_cost DESC
+                LIMIT 50")
+  result <- get_data(db, query)
+  result$total_cost <- result$total_cost / result$total_periods
+  return(result)
+}
+
+
