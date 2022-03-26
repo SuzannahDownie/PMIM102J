@@ -1,3 +1,4 @@
+###  NECESSARY LIBRARY IMPORTS AND FILE SOURCES ###
 library(GetoptLong)
 library(tidyverse)
 library(huxtable)
@@ -10,9 +11,11 @@ source("user_display_functions.R")
 source("business_logic_functions.R")
 source("database_query_functions.R")
 
-
+### CONNECT TO DATABASE ###
 db <- gp_data_connection()
 
+
+### MAIN PROGRAM ###
 main <- function()  {
   user_input <- get_user_input()
   
@@ -46,6 +49,7 @@ main <- function()  {
   }
 }
 
+### MAIN PROGRAM CALL ###
 main()
   
   

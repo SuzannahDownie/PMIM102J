@@ -30,13 +30,12 @@ create_menu_dataframe <- function(){
 ### CREATE THE PLOT FOR OPTION 2 - AVERAGE MEDICATION SPEND
 visualise_opt_2 <- function(df){
   plot_spend <- ggdotchart(data = df, x = "street.x", y = "per_patient_spend",
-                     color = "street.x", sorting = "ascending",                        
-                     add = "segments", dot.size = 5, 
-                     title = "Average Spend per Patient", xlab = "Practice",
-                     ylab = "Spend", legend_title = "Practice") + 
-                     theme(axis.text.x = element_blank()) +
-                     theme_classic()
-  plot_spend + theme(axis.text.x = element_blank())
+                           color = "street.x", sorting = "ascending",                        
+                           add = "segments", dot.size = 5, 
+                           title = "Average Spend per Patient", xlab = "Practice",
+                           ylab = "Spend", legend_title = "Practice") +
+                           theme_classic()
+  plot_spend <- plot_spend + theme(axis.text.x = element_blank())
   print(plot_spend)
 }
 
