@@ -40,7 +40,7 @@ visualise_opt_2 <- function(df){
 visualise_opt_3 <- function(diabetes_df) {
   diabetes_plot <- ggplot(diabetes_df) + 
     geom_bar(aes(x = cat_name, y = diabetes_rate, fill = cat_name), 
-             stat = "identity", width = 0.5) + 
+             stat = "identity", width = 0.2) + 
     ggtitle("Rate of Diabetes at Practice v All Wales Average") + 
     xlab(" ") + ylab("Rate of Diabetes as %") + labs(fill = " ") + 
     scale_fill_discrete(labels = c("Practice", "All Wales Average")) +
@@ -50,6 +50,7 @@ visualise_opt_3 <- function(diabetes_df) {
   print(diabetes_plot)
 }
 
+??geom_text
 ### FUNCTION TO SUPRESS THE INTERACTIVE PLOTLY UNNECCESARY WARNING MESSAGE THAT
 ### DISRUPTS USER EXPERIENCE
 suppress_plotly_error <- function(p) {
@@ -99,3 +100,4 @@ visualise_opt_5 <- function(diabetes_metformin_rate){
   )
   print(fig)
 }
+

@@ -18,7 +18,7 @@ main <- function()  {
   practice <- check_practice(user_input, db)
   
   if (nrow(practice) == 0 || nrow(practice) > 1) {
-    cat("ERROR: That practice code is incorrect, please try again.\n")
+    cat("ERROR: That practice code is incorrect, please try again.\n \n")
     return (main())
   } 
   else { 

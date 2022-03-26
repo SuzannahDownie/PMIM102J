@@ -1,6 +1,6 @@
 ### INITIALISE DATABASE CONNECTION
 gp_data_connection <- function() {
-  cat("GP DATA CONNECTION SUCCESSFUL!\n")
+  cat("GP DATA CONNECTION SUCCESSFUL!\n \n")
   require("RPostgreSQL")
   
   drv = dbDriver("PostgreSQL");
@@ -20,7 +20,7 @@ get_data <- function(db, query){
 
 ### FUNCTION TO CHECK GP PRACTICE ID RETURNS VALUE
 check_practice <- function(input, db){
-  query <- qq(paste0("SELECT practiceid, street, postcode FROM ",
+  query <- qq(paste0("SELECT practiceid, street, posttown, postcode, county FROM ",
                               "address a WHERE practiceid = '@{input}'"))
   return(get_data(db, query))
 }
@@ -76,7 +76,6 @@ get_av_spend <- function(id, db) {
   WHERE a.practiceid = '@{id}' and g.period >= 201401 and g.period < 201501
   GROUP BY a.practiceid, a.street")
   av_spend_total <- get_data(db, query)
-  print(av_spend_total)
   av_spend_monthly_total <- av_spend_total$total_cost/av_spend_total$total_periods 
   return(av_spend_monthly_total)
 }
