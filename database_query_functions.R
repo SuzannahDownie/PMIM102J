@@ -22,7 +22,15 @@ get_data <- function(db, query){
 check_practice <- function(input, db){
   query <- qq(paste0("SELECT practiceid, street, posttown, postcode, county FROM ",
                               "address a WHERE practiceid = '@{input}'"))
-  return(get_data(db, query))
+  result <- get_data(db, query)
+  if (nrow(result) == 0 || nrow(result) > 1) {
+    cat("ERROR: That practice code is incorrect, please try again.\n \n")
+    return (main())
+  } 
+  else { 
+    print(result)
+    return (result)
+  }
 }
 
 
@@ -61,7 +69,8 @@ get_patient_num <- function(id, db, name){
               WHERE orgcode = '@{id}'")
   num_patients <- get_data(db, query)
   colnames(num_patients)[which(names(num_patients) == "max")] <- "Number of Patients"
-  return(num_patients)
+  cat("The number of patients at this practice is detailed below:\n \n")
+  print(num_patients)
 }
 
 
@@ -188,4 +197,17 @@ get_top_prescription <- function(db){
   return(result)
 }
 
-
+### FUNCTION TO GET MONTHLY SPENDING - ALL WALES
+get_all_wales_spending <- function() {
+  query <- qq("SELECT g.period AS period, 
+                    ROUND(SUM(g.nic::decimal), 2) AS total_spend
+                    FROM gp_data_up_to_2015 g
+                    WHERE g.period >= 201401 AND g.period <= 201512
+                    GROUP BY g.period")
+  spend <- get_data(db, query)
+  spend$month <- as.numeric(str_sub(spend$period,-2,-1))
+  spend$period <- strtrim(spend$period, 4)
+  spend$month <- month.abb[spend$month]
+  spend$month <- factor(spend$month, levels = month.abb)
+  return(spend)
+}
