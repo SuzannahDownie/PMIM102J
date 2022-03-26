@@ -29,8 +29,9 @@ main <- function()  {
   patient_number <- get_patient_num(practice_id, db, practice_name)
   exit_flag = FALSE
   while (exit_flag == FALSE) {
-    user_choice <- create_menu_dataframe()
-    user_select <- user_select_option(user_choice)
+    create_menu_dataframe()
+    user_select <- user_select_option()
+    user_select <- strtoi(user_select)
     user_select_output <- get_user_select_output(db, practice_id, practice_name, 
                                                  practice_postcode, user_select)
     exit_or_stay <- user_go_again()
@@ -39,7 +40,9 @@ main <- function()  {
     }
     else if (exit_or_stay == 2) {
       exit_flag <- TRUE
-    } 
+    } else if (exit_or_stay == 3) {
+      main()
+    }
   }
 }
 

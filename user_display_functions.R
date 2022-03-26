@@ -3,12 +3,13 @@
 create_menu_dataframe <- function(){
   cat("\nPlease select one of the following options by typing the number of\n")
   cat("the option you require followed by enter:\n \n")
-  option_no <- c(1, 2, 3, 4, 5, 6)
+  option_no <- c(1, 2, 3, 4, 5, 6, 7)
   option <- c("AVERAGE MEDICATION SPEND\n", 
 "AVERAGE MEDICATION SPEND COMPARED TO POSTCODE AREA", "RATE OF DIABETES", 
 "ALL-WALES STATISTICAL ANALYSIS OF THE RATE OF DIABETES AND INSULIN PRESCRIPTION",
 "ALL-WALES STATISTICAL ANALYSIS OF THE RATE OF DIABETES AND METFORMIN PRESCRIPTION",
-"COMPARE MONTHLY SPENDING ACROSS ALL WALES FOR 2014/2015")
+"COMPARE MONTHLY SPENDING ACROSS ALL WALES FOR 2014/2015", 
+"STATISTICAL COMPARISON OF RATE OF DIABETES AND RATE OF METFORMIN/INSULIN PRESCRIPTION")
   
   menu_df <- data.frame(option_no, option)
   
@@ -23,8 +24,6 @@ create_menu_dataframe <- function(){
     set_bottom_border(row = 1, col = everywhere)
   
   final_hux <- print_screen(menu_df_hux, colnames = FALSE)
-  user_choice <- readline("Input: ")
-  return(user_choice)
 }
 
 
@@ -35,12 +34,13 @@ visualise_opt_2 <- function(df){
                      add = "segments", dot.size = 5, 
                      title = "Average Spend per Patient", xlab = "Practice",
                      ylab = "Spend", legend_title = "Practice") + 
+                     theme(axis.text.x = element_blank()) +
                      theme_classic()
-  plot_spend_final <- ggpar(plot_spend, tickslab = FALSE)
-  print(plot_spend_final)
+  plot_spend + theme(axis.text.x = element_blank())
+  print(plot_spend)
 }
 
-
+  
 ### CREATE THE PLOT FOR OPTION 3 - RATE OF DIABETES
 visualise_opt_3 <- function(diabetes_df) {
   diabetes_plot <- ggplot(diabetes_df) + 
@@ -48,9 +48,11 @@ visualise_opt_3 <- function(diabetes_df) {
              stat = "identity", width = 0.2) + 
     ggtitle("Rate of Diabetes at Practice v All Wales Average") + 
     xlab(" ") + ylab("Rate of Diabetes as %") + labs(fill = " ") + 
-    scale_fill_discrete(labels = c("Practice", "All Wales Average")) +
+    ylim(0, 8) + scale_fill_discrete(labels = c("Practice", "All Wales Average")) +
     scale_x_discrete(breaks=c("diabetes_rate_practice","diabetes_rate_wales"),
                      labels=c("Practice", "Wales Average")) +
+    geom_text(aes(x = cat_name, y = diabetes_rate, label = paste0(diabetes_rate, "%")), 
+              position = position_dodge(width=0.9), vjust = -0.20) +
     theme_pubr()
   print(diabetes_plot)
 }
@@ -66,20 +68,22 @@ suppress_plotly_error <- function(p) {
 ### CREATE THE PLOT FOR OPTION 4 - RATE OF DIABETES V RATE OF INSULIN PRESCRIPTION
 visualise_opt_4 <- function(diabetes_insulin_rate){
   fig <- suppress_plotly_error(
-  plot_ly(data = diabetes_insulin_rate, 
-                 x = diabetes_insulin_rate$total_insulin, 
-                 y = diabetes_insulin_rate$total_with_diabetes,
-                 marker = list(size = 8,
-                               color = 'steelblue1',
-                               line = list(color = 'cornflowerblue',
-                                           width = 1)),
-                 text = paste("Total Insulin: ", 
-                              diabetes_insulin_rate$total_insulin, 
-                              '<br>Patients with Diabetes: ',
-                              diabetes_insulin_rate$total_with_diabetes,
-                              '<br>Practice Name: ', diabetes_insulin_rate$street,
-                              '<br>Practice ID: ', diabetes_insulin_rate$orgcode)) %>%
-    layout(title = '\nRate of Diabetes Prevalence and Insulin Prescription for 2015')
+    plot_ly(data = diabetes_insulin_rate, 
+            x = ~total_insulin, 
+            y = ~total_with_diabetes,
+            marker = list(size = 8,
+                          color = 'steelblue1',
+                          line = list(color = 'cornflowerblue',
+                                      width = 1)),
+            text = paste("Total Insulin: ", 
+                         diabetes_insulin_rate$total_insulin, 
+                         '<br>Patients with Diabetes: ',
+                         diabetes_insulin_rate$total_with_diabetes,
+                         '<br>Practice Name: ', diabetes_insulin_rate$street,
+                         '<br>Practice ID: ', diabetes_insulin_rate$orgcode)) %>%
+      layout(title = '\n    Rate of Diabetes  and Insulin Prescription for 2014') %>%
+      layout(xaxis = list(title = "Total Amount of Insulin Prescribed"),
+             yaxis = list(title = "Total Number of Patients with Diabetes"))
   )
   print(fig)
 }
@@ -89,8 +93,8 @@ visualise_opt_4 <- function(diabetes_insulin_rate){
 visualise_opt_5 <- function(diabetes_metformin_rate){
   fig <- suppress_plotly_error(
     plot_ly(data = diabetes_metformin_rate, 
-            x = diabetes_metformin_rate$total_metformin, 
-            y = diabetes_metformin_rate$total_with_diabetes,
+            x = ~total_metformin, 
+            y = ~total_with_diabetes,
             marker = list(size = 8,
                           color = 'steelblue1',
                           line = list(color = 'cornflowerblue',
@@ -101,7 +105,9 @@ visualise_opt_5 <- function(diabetes_metformin_rate){
                          diabetes_metformin_rate$total_with_diabetes,
                          '<br>Practice Name: ', diabetes_metformin_rate$street,
                          '<br>Practice ID: ', diabetes_metformin_rate$orgcode)) %>%
-      layout(title = '\nRate of Diabetes Prevalence and Metformin Prescription for 2015')
+      layout(title = '\n    Rate of Diabetes  and Metformin Prescription for 2014') %>%
+      layout(xaxis = list(title = "Total Amount of Metformin Prescribed"),
+             yaxis = list(title = "Total Number of Patients with Diabetes"))
   )
   print(fig)
 }

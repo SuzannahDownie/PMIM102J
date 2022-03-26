@@ -15,11 +15,19 @@ get_user_select_output <- function(db, id, name, postcode, selection) {
   } else if (selection == 3){
     get_diabetes_rate(id)
   } else if (selection == 4){
-    stats_diabetes_insulin <- get_stat_diabetes_insulin()
+    get_stat_diabetes_insulin()
     } else if (selection == 5) {
-    stats_diabetes_metformin <- get_stat_diabetes_metformin()
+    get_stat_diabetes_metformin()
     } else if (selection == 6) {
       get_wales_spending()
+    } else if (selection == 7) {
+      stats_diabetes_insulin <- get_stat_diabetes_insulin()
+      stats_diabetes_metformin <- get_stat_diabetes_metformin()
+      if (stats_diabetes_insulin$p.value < stats_diabetes_metformin$p.value){
+        cat("Insulin has a stronger statistical relationship with diabetes.\n")
+      } else {
+        cat("Metformin has a stronger statistical relationship with diabetes.\n")
+      }
     }
 }
 
@@ -38,8 +46,8 @@ check_practice_viable <- function(input, db){
     practice_viable <- TRUE
   } else{
     practice_viable <- FALSE
-    cat("I'm afraid we have insufficient data about this practice to proceed.\n") 
-    cat ("Please enter another practice.\n")
+    cat("\n \nI'm afraid we have insufficient data about this practice to proceed.\n") 
+    cat ("\n \nPlease enter another practice.\n")
     return (main())
   }
   return(practice_viable)
@@ -57,6 +65,7 @@ get_total_spend <- function(id, name){
 get_med_spend <- function(postcode){
   outcode <- get_outcode(db, postcode)
   av_spend_df <- get_av_spend_area(outcode, db, postcode)
+  View(av_spend_df)
   plot_spend <- visualise_opt_2(av_spend_df)
 }
 
@@ -68,6 +77,7 @@ get_diabetes_rate <- function(id) {
   diabetes_df <- melt(diabetes_df, measure.vars = c("diabetes_rate_practice", 
                                                     "diabetes_rate_wales"))
   colnames(diabetes_df) <- c("cat_name", "diabetes_rate")
+  View(diabetes_df)
   plot_diabetes_rate <- visualise_opt_3(diabetes_df)
 }
 
@@ -80,7 +90,8 @@ get_stat_diabetes_insulin <- function(){
   cat("The t test p-value for diabetes and Insulin is:\n \n", 
       format(t_test_ins$p.value, scientific = FALSE), "\n \n")
   if (t_test_ins$p.value < 0.5){
-    cat("This is statistically significant\n \n")
+    cat("This is statistically significant. It allows us to reject the null hypothesis\n")
+    cat("These results are not the result of chance.\n \n")
     return(t_test_ins)
   }
 }
@@ -94,11 +105,14 @@ get_stat_diabetes_metformin <- function() {
   cat("The t test p-value for diabetes and Metformin is:\n \n", 
       format(t_test_met$p.value, scientific = FALSE), "\n \n")
   if (t_test_met$p.value < 0.5){
-    cat("This is statistically significant\n \n")
+    cat("This is statistically significant. It allows us to reject the null hypothesis\n")
+    cat("These results are not the result of chance.\n \n")
     return(t_test_met)
 }
 }
 
+
+### FUNCTION TO GET ALL WALES SPENDING AND VISUALISE THIS FOR 2014 AND 2015
 get_wales_spending <- function(){
   spend <- get_all_wales_spending()
   visualise_opt_6(spend)
