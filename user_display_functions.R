@@ -1,11 +1,27 @@
 ### FUNCTION TO CREATE A USER MENU ASKING THEM WHICH OF THE PART 1 TASKS THEY 
 ### WOULD LIKE TO SEE
-create_menu_dataframe <- function(){
-  option_no <- c(1, 2, 3, 4, 5)
-  option <- c("AVERAGE MEDICATION SPEND.\n", 
-"AVERAGE MEDICATION SPEND COMPARED TO POSTCODE AREA", "RATE OF DIABETES",
-"ALL-WALES STATISTICAL ANALYSIS OF THE RATE OF DIABETES AND INSULIN PRESCRIPTION",
-"ALL-WALES STATISTICAL ANALYSIS OF THE RATE OF DIABETES AND METFORMIN PRESCRIPTION")
+selection_menu_practice_wales <- function(){
+  option_no <- c(1,2)
+  option <- c("Practice Specific Information", "All Wales Information")
+  menu_df <- data.frame(option_no, option)
+  
+  colnames(menu_df)[which(names(menu_df) == "option_no")] <- "Option Number"
+  colnames(menu_df)[which(names(menu_df) == "option")] <- " "
+  
+  menu_df_hux <- hux(menu_df) %>%
+    set_all_padding(4) %>%
+    set_outer_padding(0) %>%
+    set_number_format(0) %>%
+    set_bold(row = 1, col = everywhere) %>%
+    set_bottom_border(row = 1, col = everywhere)
+  
+  final_hux <- print_screen(menu_df_hux, colnames = FALSE)
+}
+
+menu_dataframe_practice <- function(){
+  option_no <- c(1, 2, 3)
+  option <- c("AVERAGE MEDICATION SPEND\n", 
+"AVERAGE MEDICATION SPEND COMPARED TO POSTCODE AREA", "RATE OF DIABETES")
   
   menu_df <- data.frame(option_no, option)
   
@@ -20,8 +36,29 @@ create_menu_dataframe <- function(){
     set_bottom_border(row = 1, col = everywhere)
   
   final_hux <- print_screen(menu_df_hux, colnames = FALSE)
-  return(final_hux)
 }
+
+menu_dataframe_wales <- function(){
+  option_no <- c(1, 2)
+  option <- c("ALL-WALES STATISTICAL ANALYSIS OF THE RATE OF DIABETES AND INSULIN PRESCRIPTION",
+              "ALL-WALES STATISTICAL ANALYSIS OF THE RATE OF DIABETES AND METFORMIN PRESCRIPTION")
+  menu_df <- data.frame(option_no, option)
+  
+  colnames(menu_df)[which(names(menu_df) == "option_no")] <- "Option Number"
+  colnames(menu_df)[which(names(menu_df) == "option")] <- " "
+  
+  menu_df_hux <- hux(menu_df) %>%
+    set_all_padding(4) %>%
+    set_outer_padding(0) %>%
+    set_number_format(0) %>%
+    set_bold(row = 1, col = everywhere) %>%
+    set_bottom_border(row = 1, col = everywhere)
+  
+  final_hux <- print_screen(menu_df_hux, colnames = FALSE)
+}
+
+menu_dataframe_wales()
+
 
 ### CREATE THE PLOT FOR OPTION 2 - AVERAGE MEDICATION SPEND
 visualise_opt_2 <- function(df){
@@ -50,7 +87,7 @@ visualise_opt_3 <- function(diabetes_df) {
   print(diabetes_plot)
 }
 
-??geom_text
+
 ### FUNCTION TO SUPRESS THE INTERACTIVE PLOTLY UNNECCESARY WARNING MESSAGE THAT
 ### DISRUPTS USER EXPERIENCE
 suppress_plotly_error <- function(p) {
