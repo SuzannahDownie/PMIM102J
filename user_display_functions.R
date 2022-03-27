@@ -3,13 +3,14 @@
 create_menu_dataframe <- function(){
   cat("\nPlease select one of the following options by typing the number of\n")
   cat("the option you require followed by enter:\n \n")
-  option_no <- c(1, 2, 3, 4, 5, 6, 7)
+  option_no <- c(1, 2, 3, 4, 5, 6, 7, 8)
   option <- c("AVERAGE MEDICATION SPEND\n", 
 "AVERAGE MEDICATION SPEND COMPARED TO POSTCODE AREA", "RATE OF DIABETES", 
 "ALL-WALES STATISTICAL ANALYSIS OF THE RATE OF DIABETES AND INSULIN PRESCRIPTION",
 "ALL-WALES STATISTICAL ANALYSIS OF THE RATE OF DIABETES AND METFORMIN PRESCRIPTION",
 "COMPARE MONTHLY SPENDING ACROSS ALL WALES FOR 2014/2015", 
-"STATISTICAL COMPARISON OF RATE OF DIABETES AND RATE OF METFORMIN/INSULIN PRESCRIPTION")
+"STATISTICAL COMPARISON OF RATE OF DIABETES AND RATE OF METFORMIN/INSULIN PRESCRIPTION",
+"TOP 500 MEDICINES BY COST AND BNF CHAPTER DESCRIPTION")
   
   menu_df <- data.frame(option_no, option)
   
@@ -115,11 +116,38 @@ visualise_opt_5 <- function(diabetes_metformin_rate){
 
 ### CREATE PLOT TO VISUALISE ALL WALES SPENDING FOR 2014 AND 2015
 visualise_opt_6 <- function(spend) {
+  options(scipen=999)
   fig <- ggplot(spend, aes(x = month, y = total_spend, colour = period, 
                                      group = period)) + 
     geom_point() + geom_line() +
     ggtitle("Total Monthly Spend Across Wales 2014 and 2015") +
     xlab("Month") + ylab("Total Spend") + ylim(40000000, 55000000) +
     theme_pubr()
+  
   print(fig)
 }
+
+
+### CREATE PLOT TO VISUALISE TOP MED SPEND AND BNF CHAPTER
+visualise_top_meds <- function(result) {
+  fig <- ggplot(data = result, aes(x = total_cost, 
+                                   y = chapterdesc, color = chapterdesc, 
+                                   text = paste("Name: ", bnfname,
+                                                "<br>Cost £", total_cost,
+                                                "<br>Items: ", total_items))) +
+    geom_point() + theme(axis.ticks.y = element_blank(),
+                         axis.text.y = element_blank(),
+                         axis.title.y = element_blank()) +
+    ggtitle("Practice Level: Top 500 Medicines by Cost and BNF Chapter Description") +
+    xlab("Total Spend £") 
+  
+  print(ggplotly(fig))
+}
+
+
+
+
+
+
+
+

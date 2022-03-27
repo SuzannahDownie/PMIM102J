@@ -182,19 +182,22 @@ get_diabetes_and_metformin <- function(db) {
   return(result) 
 }
   
-### GET TOP 50 MOST EXPENSIVE MEDICINES PRESCRIBED ACROSS WALES
-get_top_prescription <- function(db){
-  query <- qq("SELECT g.bnfcode, g.bnfname, 
-                  ROUND(SUM(g.nic::decimal), 2) AS total_cost,
-                  SUM(g.quantity) AS total_items,
-                  COUNT(DISTINCT g.period) AS total_periods
-                  FROM gp_data_up_to_2015 g
-                  WHERE g.period >= 201401 AND g.period < 201501
-                  GROUP BY g.bnfcode, g.bnfname
-                  ORDER BY total_cost DESC
-                  LIMIT 50")
+### GET TOP 500 MOST PRESCRIBED MEDICINES AT PRACTICE AND THEIR BNF CHAPTER
+get_top_prescription <- function(id) {
+  query <- qq("SELECT g.bnfcode, g.bnfname, k.chapterdesc, k.bnfsubsection,
+                ROUND(SUM(g.nic::decimal), 2) AS total_cost,
+                SUM(g.quantity) AS total_items
+                FROM gp_data_up_to_2015 g
+                INNER JOIN bnf k
+                ON LEFT(k.bnfsubsection::varchar, 6) = LEFT(g.bnfcode, 6)
+                WHERE g.period >= 201401 AND g.period < 201501
+                AND g.bnfcode NOT LIKE '1404000H0AAAFAF%'
+                AND g.practiceid = '@{id}'
+                GROUP BY g.bnfcode, g.bnfname, k.chapterdesc, k.bnfsubsection
+                ORDER BY total_cost DESC
+                LIMIT 500")
+  
   result <- get_data(db, query)
-  result$total_cost <- result$total_cost / result$total_periods
   return(result)
 }
 

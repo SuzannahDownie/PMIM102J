@@ -21,13 +21,9 @@ get_user_select_output <- function(db, id, name, postcode, selection) {
     } else if (selection == 6) {
       get_wales_spending()
     } else if (selection == 7) {
-      stats_diabetes_insulin <- get_stat_diabetes_insulin()
-      stats_diabetes_metformin <- get_stat_diabetes_metformin()
-      if (stats_diabetes_insulin$p.value < stats_diabetes_metformin$p.value){
-        cat("Insulin has a stronger statistical relationship with diabetes.\n")
-      } else {
-        cat("Metformin has a stronger statistical relationship with diabetes.\n")
-      }
+      compare_insulin_metformin()
+    } else if (selection == 8) {
+      get_top_medicines(id)
     }
 }
 
@@ -111,9 +107,27 @@ get_stat_diabetes_metformin <- function() {
 }
 }
 
+### FUNCTION TO COMPARE STATISTICAL OUTPUT OF DIABETES AND INSULIN/METFORMIN
+compare_insulin_metformin <- function(){
+stats_diabetes_insulin <- get_stat_diabetes_insulin()
+stats_diabetes_metformin <- get_stat_diabetes_metformin()
+if (stats_diabetes_insulin$p.value < stats_diabetes_metformin$p.value){
+  cat("Insulin has a stronger statistical relationship with diabetes.\n")
+} else {
+  cat("Metformin has a stronger statistical relationship with diabetes.\n")
+}
+}
 
 ### FUNCTION TO GET ALL WALES SPENDING AND VISUALISE THIS FOR 2014 AND 2015
 get_wales_spending <- function(){
   spend <- get_all_wales_spending()
+  View(spend)
   visualise_opt_6(spend)
+}
+
+### FUNCTION TO GET TOP MEDICINES, BNF CODES AND VISUALISE THIS
+get_top_medicines <- function(id){
+  top_meds <- get_top_prescription(id)
+  View(top_meds)
+  visualise_top_meds(top_meds)
 }
