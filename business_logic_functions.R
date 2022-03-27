@@ -1,12 +1,17 @@
+### <<PMIM102J - Scientific Computing and Healthcare>
+### <Database Project>
+### <Version 1>
+### <Suzannah Downie>
+### <Subfile - Business Logic Functions>
+### <Contains the business logic functions for the PMIM102J assessment>
+
 ### ALLOW USER TO EXIT THE FUNCTION
 exit <- function() { 
     cat("Exiting the program.\nGoodbye")
     invokeRestart("abort")
   }    
 
-### OUTPUT THE RESULT OF THE USER'S MENU SELECTION -
-### THIS WILL SHOW THE DESIRED OUTPUT OF PART 1 OF THE ASSIGNMENT
-### COULD BE REFACTORED TO BE FAR LESS CUMBERSOME
+### OUTPUT THE RESULT OF THE USER'S MENU SELECTION
 get_user_select_output <- function(id, name, postcode, selection) {
     if (selection == 1) {
     practice_med_spend(id, name)
@@ -32,7 +37,6 @@ get_user_select_output <- function(id, name, postcode, selection) {
     comp_wales_smoking_cancer_COPD()
     }
 }
-
 
 ### THIS FUNCTION CALLS TWO DATABASE QUERY FUNCTIONS:
 ###         - CHECK IF MEDICINE DATA AVAILABLE FOR CHOSEN GP PRACTICE

@@ -1,3 +1,10 @@
+### <<PMIM102J - Scientific Computing and Healthcare>
+### <Database Project>
+### <Version 1>
+### <Suzannah Downie>
+### <Subfile - Database Query Functions>
+### <Contains the database query functions for the PMIM102J assessment>
+
 ### INITIALISE DATABASE CONNECTION
 gp_data_connection <- function() {
     cat("GP DATA CONNECTION SUCCESSFUL!\n \n")

@@ -1,3 +1,10 @@
+### <<PMIM102J - Scientific Computing and Healthcare>
+### <Database Project>
+### <Version 1>
+### <Suzannah Downie>
+### <Subfile - User Display Functions>
+### <Contains the user display functions for the PMIM102J assessment>
+
 ### FUNCTION TO CREATE A USER MENU ASKING THEM WHICH OPTION THEY 
 ### WOULD LIKE TO SEE
 create_menu_dataframe <- function(){

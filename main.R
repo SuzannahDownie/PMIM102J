@@ -1,4 +1,11 @@
-###  NECESSARY LIBRARY IMPORTS AND FILE SOURCES ###
+### <<PMIM102J - Scientific Computing and Healthcare>
+### <Database Project>
+### <Version 1>
+### <Suzannah Downie>
+### <Main file - Main>
+### <This is the main file of the PMIM102J assignment>
+
+###  NECESSARY LIBRARY IMPORTS AND FILE SOURCES 
 library(GetoptLong)
 library(tidyverse)
 library(huxtable)
@@ -11,11 +18,11 @@ source("user_display_functions.R")
 source("business_logic_functions.R")
 source("database_query_functions.R")
 
-### CONNECT TO DATABASE ###
+### CONNECT TO DATABASE 
 db <- gp_data_connection()
 
 
-### MAIN PROGRAM ###
+### MAIN PROGRAM
 main <- function()  {
     user_practice_input <- get_user_practice_input()
     practice <- check_practice(user_practice_input)
@@ -48,7 +55,7 @@ main <- function()  {
   }
 }
 
-### MAIN PROGRAM CALL ###
+### MAIN PROGRAM CALL
 main()
   
   

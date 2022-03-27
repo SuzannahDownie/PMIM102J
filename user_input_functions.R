@@ -1,3 +1,10 @@
+### <<PMIM102J - Scientific Computing and Healthcare>
+### <Database Project>
+### <Version 1>
+### <Suzannah Downie>
+### <Subfile - User Input Functions>
+### <Contains the user input functions for the PMIM102J assessment>
+
 ### FUNCTION TO GET USER INPUT OF PRACTICE ID
 get_user_practice_input <- function() {
     cat("Please enter the Practice ID of the surgery you require:\n")
