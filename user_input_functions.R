@@ -36,17 +36,17 @@ user_validate_practice <- function(practice){
 
 ### FUNCTION TO ASK THE USER TO SELECT AN AVAILABLE MENU OPTION
 user_select_option <- function(){
-    user_choice <- readline("Input: ")
-    while (!(user_choice %in% c("1", "2", "3", "4", "5", "6", "7", "8", "9", 
-                                "10", "11"))) {
-    cat("You have not entered a correct option, try again. \n \n")  
-    display_option <- create_menu_dataframe()
-    user_select_option()
-    } 
-    if (user_choice %in% c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", 
-                           "11")) {
-    return(user_choice)
-}
+    repeat {
+      create_menu_dataframe()
+      user_choice <- readline("Input: ")
+      if (user_choice %in% c("1", "2", "3", "4", "5", "6", "7", "8", "9",
+                             "10", "11")) {
+        return(user_choice)
+        break
+      } else {
+          cat("You have not entered a correct option, try again. \n \n")
+      }
+    }
 }
 
 ### FUNCTION TO ASK USER IF THEY WANT TO TRY ANOTHER MENU OPTION OR QUIT PROGRAM

@@ -37,7 +37,7 @@ main <- function()  {
     patient_number <- get_patient_num(practice_id, practice_name)
     exit_flag = FALSE
     while (exit_flag == FALSE) {
-        create_menu_dataframe()
+        # create_menu_dataframe()
         user_select <- user_select_option()
         user_select <- strtoi(user_select)
         user_select_output <- get_user_select_output(practice_id, 
